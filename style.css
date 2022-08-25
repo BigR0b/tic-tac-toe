@@ -1,0 +1,16 @@
+.container {
+  display: grid;
+  width: 500px;
+  height: 500px;
+  background-color: aliceblue;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  font-size: 100px;
+}

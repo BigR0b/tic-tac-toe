@@ -34,10 +34,11 @@ const gameBoard = (function () {
   return { addPiece };
 })();
 
-const Player = (name) => {
+const Player = (name, mark) => {
   const playerName = name;
+  const mark = mark;
 
-  return { playerName };
+  return { mark };
 };
 
 const player1 = Player('Player 1');

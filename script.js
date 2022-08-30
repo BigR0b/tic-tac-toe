@@ -1,11 +1,11 @@
 'use strict';
 
-const gameBoard = (function () {
+const gameBoard = (() => {
   let nextPlay = 0;
   // prettier-ignore
-  const gameState = [ '', '', '',
-                      '', '', '',
-                      '', '', '',];
+  const game = ['', '', '',
+                '', '', '',
+                '', '', '',];
 
   const winCon = [
     [0, 1, 2],
@@ -18,42 +18,45 @@ const gameBoard = (function () {
     [2, 4, 6],
   ];
 
-  const addToGameBoard = (move) => {
-    if (gameState[move] === 'X' || gameState[move] === 'O') {
+  const addToGameBoard = move => {
+    if (game[move] === 'X' || game[move] === 'O') {
       return;
     } else {
       if (nextPlay === 0) {
-        gameState[move] = 'X';
+        game[move] = 'O';
         nextPlay++;
-        console.log(gameState);
+        return game;
       } else {
-        gameState[move] = 'O';
+        game[move] = 'X';
         nextPlay--;
-        console.log(gameState);
+        return game;
       }
     }
   };
 
-  // const play = cells.forEach((cell) => {
-  //   cell.addEventListener('click', playClick);
-  // });
-
-  return { gameState, addToGameBoard, nextPlay };
+  return { addToGameBoard, nextPlay, game };
 })();
 
-const displayController = (function () {
+const displayController = (() => {
   const cells = document.querySelectorAll('.cell');
+  const gameState = gameBoard.addToGameBoard();
+  const addToDom = () => {
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].textContent = gameState[i];
+    }
+  };
 
-  cells.forEach((e) => {
-    e.addEventListener('click', () => {
-      const move = e.dataset.cell;
+  cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+      const move = cell.dataset.cell;
       gameBoard.addToGameBoard(move);
+      addToDom();
     });
   });
-  return {};
+  return { addToDom, gameState };
 })();
 
-const Player = (name) => {
+const Player = name => {
   const playerName = name;
   const playerMark = mark;
   const plays = [];

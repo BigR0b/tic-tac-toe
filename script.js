@@ -18,6 +18,16 @@ const gameBoard = (() => {
     [2, 4, 6],
   ];
 
+  const checkMove = move => {
+    const playerMove = [];
+    for (let i = 0; i < game.length; i++) {
+      if (game[i] === move) {
+        playerMove.push(i);
+      }
+    }
+    return playerMove;
+  };
+
   const addToGameBoard = move => {
     if (game[move] === 'X' || game[move] === 'O') {
       return;
@@ -34,7 +44,7 @@ const gameBoard = (() => {
     }
   };
 
-  return { addToGameBoard };
+  return { addToGameBoard, checkMove, game };
 })();
 
 const displayController = (() => {

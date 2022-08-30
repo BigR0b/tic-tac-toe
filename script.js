@@ -34,17 +34,12 @@ const gameBoard = (() => {
     }
   };
 
-  return { addToGameBoard, nextPlay, game };
+  return { addToGameBoard };
 })();
 
 const displayController = (() => {
   const cells = document.querySelectorAll('.cell');
   const gameState = gameBoard.addToGameBoard();
-  const addToDom = () => {
-    for (let i = 0; i < cells.length; i++) {
-      cells[i].textContent = gameState[i];
-    }
-  };
 
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
@@ -53,6 +48,12 @@ const displayController = (() => {
       addToDom();
     });
   });
+
+  const addToDom = () => {
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].textContent = gameState[i];
+    }
+  };
   return { addToDom, gameState };
 })();
 

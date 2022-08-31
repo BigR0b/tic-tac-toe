@@ -3,48 +3,56 @@
 const gameBoard = (() => {
   let nextPlay = 0;
   // prettier-ignore
-  const game = ['', '', '',
+  const _game = ['', '', '',
                 '', '', '',
                 '', '', '',];
 
-  const winCon = [
+  const _winCon = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
+    [0, 3, 6],
     [1, 4, 7],
     [2, 5, 8],
-    [0, 3, 6],
     [0, 4, 8],
     [2, 4, 6],
   ];
 
-  const checkMove = move => {
-    const playerMove = [];
-    for (let i = 0; i < game.length; i++) {
-      if (game[i] === move) {
-        playerMove.push(i);
-      }
-    }
-    return playerMove;
-  };
-
   const addToGameBoard = move => {
-    if (game[move] === 'X' || game[move] === 'O') {
+    if (_game[move] === 'X' || _game[move] === 'O') {
       return;
     } else {
       if (nextPlay === 0) {
-        game[move] = 'O';
+        _game[move] = 'O';
         nextPlay++;
-        return game;
+        return _game;
       } else {
-        game[move] = 'X';
+        _game[move] = 'X';
         nextPlay--;
-        return game;
+        return _game;
       }
     }
   };
 
-  return { addToGameBoard, checkMove, game };
+  const checkMove = () => {
+    const play = [];
+    for (let i = 0; i < _game.length; i++) {
+      if (_game[i] == 'X') {
+        play.push(i);
+      }
+    }
+    return play;
+  };
+
+  const checkWinner = (arr, values) => {
+    return values[3].every(value => {
+      return arr.includes(value);
+    });
+  };
+  //prettier-ignore
+  return {
+    addToGameBoard, _game, checkMove, nextPlay, _winCon, checkWinner,
+  };
 })();
 
 const displayController = (() => {

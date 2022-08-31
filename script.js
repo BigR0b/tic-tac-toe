@@ -45,9 +45,15 @@ const gameBoard = (() => {
   };
 
   const checkWinner = (arr, values) => {
-    return values[3].every(value => {
-      return arr.includes(value);
-    });
+    for (let i = 0; i < _winCon.length; i++) {
+      if (
+        values[i].every(value => {
+          return arr.includes(value);
+        }) === true
+      ) {
+        return 'winner';
+      }
+    }
   };
   //prettier-ignore
   return {

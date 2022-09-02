@@ -1,7 +1,15 @@
 'use strict';
-
 const gameBoard = (() => {
   let nextPlay = 0;
+  let mark = () => {
+    if (nextPlay === 0) {
+      nextPlay = 1;
+      return 'X';
+    } else {
+      nextPlay = 0;
+      return 'O';
+    }
+  };
   // prettier-ignore
   const _game = ['', '', '',
                 '', '', '',
@@ -18,30 +26,26 @@ const gameBoard = (() => {
     [2, 4, 6],
   ];
 
-  const addToGameBoard = move => {
-    if (_game[move] === 'X' || _game[move] === 'O') {
+  const addToGameBoard = (cell, mark) => {
+    if (_game[cell] === 'X' || _game[cell] === 'O') {
       return;
     } else {
-      if (nextPlay === 0) {
-        _game[move] = 'O';
-        nextPlay++;
-        return _game;
-      } else {
-        _game[move] = 'X';
-        nextPlay--;
-        return _game;
-      }
+      _game[cell] = mark;
+      return _game;
     }
   };
 
   const checkMove = () => {
-    const play = [];
+    const play1 = [];
+    const play2 = [];
     for (let i = 0; i < _game.length; i++) {
       if (_game[i] == 'X') {
-        play.push(i);
+        play1.push(i);
+      } else if (_game[i] == 'O') {
+        play2.push(i);
       }
     }
-    return play;
+    return [play1, play2];
   };
 
   const checkWinner = (arr, values) => {
@@ -55,9 +59,13 @@ const gameBoard = (() => {
       }
     }
   };
+
+  const winner = () => {
+    return checkWinner(checkMove(), _winCon);
+  };
   //prettier-ignore
   return {
-    addToGameBoard, _game, checkMove, nextPlay, _winCon, checkWinner,
+    addToGameBoard, _game, checkMove, _winCon, checkWinner, winner, mark, nextPlay
   };
 })();
 
@@ -68,8 +76,10 @@ const displayController = (() => {
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
       const move = cell.dataset.cell;
-      gameBoard.addToGameBoard(move);
+      let mark = gameBoard.mark();
+      gameBoard.addToGameBoard(move, mark);
       addToDom();
+      gameBoard.winner();
     });
   });
 

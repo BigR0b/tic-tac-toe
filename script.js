@@ -48,11 +48,11 @@ const gameBoard = (() => {
     return [play1, play2];
   };
 
-  const checkWinner = (arr, values) => {
-    for (let i = 0; i < _winCon.length; i++) {
+  const checkWinner = (plays, winCon) => {
+    for (let i = 0; i < winCon.length; i++) {
       if (
-        values[i].every(value => {
-          return arr.includes(value);
+        winCon[i].every(value => {
+          return plays.includes(value);
         }) === true
       ) {
         return 'winner';
@@ -72,14 +72,30 @@ const gameBoard = (() => {
 const displayController = (() => {
   const cells = document.querySelectorAll('.cell');
   const gameState = gameBoard.addToGameBoard();
+  const turn = mark => {
+    if (mark === 'X') {
+      return 0;
+    } else {
+      return 1;
+    }
+  };
 
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
       const move = cell.dataset.cell;
-      let mark = gameBoard.mark();
-      gameBoard.addToGameBoard(move, mark);
-      addToDom();
-      gameBoard.winner();
+      console.log(cell.textContent);
+      if (!cell.textContent) {
+        const mark = gameBoard.mark();
+        gameBoard.addToGameBoard(move, mark);
+        addToDom();
+        const allMoves = gameBoard.checkMove();
+        const playerTurn = turn(mark);
+        const playerMove = allMoves[playerTurn];
+
+        if (gameBoard.checkWinner(playerMove, gameBoard._winCon) === 'winner') {
+          alert(`${mark} Wins!`);
+        }
+      }
     });
   });
 
@@ -92,9 +108,9 @@ const displayController = (() => {
 })();
 
 const Player = name => {
-  const playerName = name;
-  const playerMark = mark;
-  const plays = [];
-
-  return { mark };
+  const mark = gameBoard.mark();
+  return { name, mark };
 };
+
+// const player1 = Player(prompt('Player 1 name'));
+// const player2 = Player(prompt('Player 2 name'));

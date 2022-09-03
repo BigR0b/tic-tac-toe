@@ -78,7 +78,7 @@ const gameBoard = (() => {
 
   //prettier-ignore
   return {
-    addToGameBoard,  checkMove, winCon, checkWinner,  mark, nextPlay,
+    addToGameBoard,  checkMove, winCon, checkWinner,  mark, nextPlay, resetGame
   };
 })();
 
@@ -124,6 +124,13 @@ const displayController = (() => {
     }
   };
 
+  resetBtn.addEventListener('click', () => {
+    gameBoard.resetGame();
+    addToDom();
+    _cells.forEach(cell => {
+      cell.classList.remove('game-over');
+    });
+  });
   return { addToDom, gameState };
 })();
 

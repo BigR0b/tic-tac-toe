@@ -11,9 +11,9 @@ const gameBoard = (() => {
     }
   };
   // prettier-ignore
-  const _game = ['', '', '',
+  const _game =['', '', '',
                 '', '', '',
-                '', '', '',];
+                '', '', '' ];
 
   const winCon = [
     [0, 1, 2],
@@ -56,6 +56,8 @@ const gameBoard = (() => {
         }) === true
       ) {
         return 'winner';
+      } else if (checkMove()[0].length === 5 && checkMove()[1].length === 4) {
+        return 'tie';
       }
     }
   };
@@ -80,7 +82,6 @@ const displayController = (() => {
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
       const move = cell.dataset.cell;
-      console.log(cell.textContent);
       if (!cell.textContent) {
         const mark = gameBoard.mark();
         gameBoard.addToGameBoard(move, mark);
@@ -93,6 +94,10 @@ const displayController = (() => {
           cells.forEach(cell => {
             cell.classList.toggle('game-over');
           });
+        } else if (
+          gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'tie'
+        ) {
+          alert(`It's a tie`);
         }
       }
     });

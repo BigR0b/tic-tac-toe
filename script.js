@@ -56,7 +56,14 @@ const gameBoard = (() => {
         }) === true
       ) {
         return 'winner';
-      } else if (checkMove()[0].length === 5 && checkMove()[1].length === 4) {
+      }
+      if (
+        i === 7 &&
+        winCon[i].every(value => {
+          return plays.includes(value);
+        }) === false &&
+        checkMove()[0].length === 5
+      ) {
         return 'tie';
       }
     }

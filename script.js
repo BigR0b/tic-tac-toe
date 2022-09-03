@@ -15,7 +15,7 @@ const gameBoard = (() => {
                 '', '', '',
                 '', '', '',];
 
-  const _winCon = [
+  const winCon = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -60,12 +60,9 @@ const gameBoard = (() => {
     }
   };
 
-  const winner = () => {
-    return checkWinner(checkMove(), _winCon);
-  };
   //prettier-ignore
   return {
-    addToGameBoard, _game, checkMove, _winCon, checkWinner, winner, mark, nextPlay
+    addToGameBoard,  checkMove, winCon, checkWinner,  mark, nextPlay
   };
 })();
 
@@ -91,9 +88,11 @@ const displayController = (() => {
         const allMoves = gameBoard.checkMove();
         const playerTurn = turn(mark);
         const playerMove = allMoves[playerTurn];
-
-        if (gameBoard.checkWinner(playerMove, gameBoard._winCon) === 'winner') {
+        if (gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'winner') {
           alert(`${mark} Wins!`);
+          cells.forEach(cell => {
+            cell.classList.toggle('game-over');
+          });
         }
       }
     });

@@ -15,6 +15,13 @@ const gameBoard = (() => {
                 '', '', '',
                 '', '', '' ];
 
+  const resetGame = () => {
+    for (let i = 0; i < _game.length; i++) {
+      _game[i] = '';
+    }
+    nextPlay = 0;
+  };
+
   const winCon = [
     [0, 1, 2],
     [3, 4, 5],
@@ -71,12 +78,13 @@ const gameBoard = (() => {
 
   //prettier-ignore
   return {
-    addToGameBoard,  checkMove, winCon, checkWinner,  mark, nextPlay
+    addToGameBoard,  checkMove, winCon, checkWinner,  mark, nextPlay,
   };
 })();
 
 const displayController = (() => {
-  const cells = document.querySelectorAll('.cell');
+  const _cells = document.querySelectorAll('.cell');
+  const resetBtn = document.querySelector('.reset');
   const gameState = gameBoard.addToGameBoard();
   const turn = mark => {
     if (mark === 'X') {
@@ -86,7 +94,7 @@ const displayController = (() => {
     }
   };
 
-  cells.forEach(cell => {
+  _cells.forEach(cell => {
     cell.addEventListener('click', () => {
       const move = cell.dataset.cell;
       if (!cell.textContent) {
@@ -98,7 +106,7 @@ const displayController = (() => {
         const playerMove = allMoves[playerTurn];
         if (gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'winner') {
           alert(`${mark} Wins!`);
-          cells.forEach(cell => {
+          _cells.forEach(cell => {
             cell.classList.toggle('game-over');
           });
         } else if (
@@ -111,10 +119,11 @@ const displayController = (() => {
   });
 
   const addToDom = () => {
-    for (let i = 0; i < cells.length; i++) {
-      cells[i].textContent = gameState[i];
+    for (let i = 0; i < _cells.length; i++) {
+      _cells[i].textContent = gameState[i];
     }
   };
+
   return { addToDom, gameState };
 })();
 

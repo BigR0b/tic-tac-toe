@@ -8,9 +8,17 @@
     <title>Tic Tac Toe</title>
   </head>
   <body>
-    <div class="flex-container">
+    <div class="flex-container hidden">
       <h1>Tic Tac Toe</h1>
-      <h2 class="announce-text"></h2>
+      <div class="scoreboard">
+        <h2 class="player1-name">
+          Player 1 <br /><span class="player1-score"></span>
+        </h2>
+        <h2 class="announce-text"></h2>
+        <h2 class="player2-name">
+          Player 2 <br /><span class="player2-score"></span>
+        </h2>
+      </div>
       <div class="container">
         <div class="cell" data-cell="0"></div>
         <div class="cell" data-cell="1"></div>
@@ -23,7 +31,23 @@
         <div class="cell" data-cell="8"></div>
       </div>
       <button class="reset">Reset</button>
-      <script src="script.js"></script>
     </div>
+    <div class="player-container">
+      <div class="player-prompt">
+        <div class="players">
+          <div class="player-name">
+            <h1>Player 1 name</h1>
+            <input type="text" name="" id="" class="player1" />
+          </div>
+          <div class="player-name">
+            <h1>Player 2 name</h1>
+            <input type="text" name="" id="" class="player2" />
+          </div>
+        </div>
+        <button class="playerBtn">Start</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>

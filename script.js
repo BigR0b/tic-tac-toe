@@ -86,7 +86,15 @@ const displayController = (() => {
   const _cells = document.querySelectorAll('.cell');
   const resetBtn = document.querySelector('.reset');
   const gameState = gameBoard.addToGameBoard();
-  const announce = document.querySelector('h2');
+  const announce = document.querySelector('.announce-text');
+  const player1 = document.querySelector('.player1');
+  const player2 = document.querySelector('.player2');
+  const playerBtn = document.querySelector('.playerBtn');
+  const playerPrompt = document.querySelector('.player-container');
+  const player1Name = document.querySelector('.player1-name');
+  const player2Name = document.querySelector('.player2-name');
+
+  const game = document.querySelector('.flex-container');
   const turn = mark => {
     if (mark === 'X') {
       return 0;
@@ -133,11 +141,27 @@ const displayController = (() => {
       cell.classList.remove('game-over');
     });
   });
+  playerBtn.addEventListener('click', () => {
+    const createdPlayer1 = Player(player1.value);
+    const createdPlayer2 = Player(player2.value);
+
+    if (player1.value) {
+      player1Name.textContent = createdPlayer1.name;
+    }
+    if (player2.value) {
+      player2Name.textContent = createdPlayer2.name;
+    }
+
+    playerPrompt.classList.toggle('hidden');
+    game.classList.remove('hidden');
+  });
+
   return { addToDom, gameState };
 })();
 
 const Player = name => {
   const mark = gameBoard.mark();
+  const bot = false;
   return { name, mark };
 };
 

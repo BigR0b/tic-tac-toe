@@ -32,7 +32,8 @@ h2 {
   justify-content: center;
 }
 
-.reset {
+.reset,
+.playerBtn {
   margin-top: 50px;
   width: 75px;
   height: 30px;
@@ -54,4 +55,32 @@ h2 {
 .container :nth-child(6),
 .container :nth-child(9) {
   border-right: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.players {
+  display: flex;
+  justify-content: space-around;
+}
+.player-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-prompt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

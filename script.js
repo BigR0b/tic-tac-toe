@@ -86,6 +86,7 @@ const displayController = (() => {
   const _cells = document.querySelectorAll('.cell');
   const resetBtn = document.querySelector('.reset');
   const gameState = gameBoard.addToGameBoard();
+  const announce = document.querySelector('h2');
   const turn = mark => {
     if (mark === 'X') {
       return 0;
@@ -105,14 +106,14 @@ const displayController = (() => {
         const playerTurn = turn(mark);
         const playerMove = allMoves[playerTurn];
         if (gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'winner') {
-          alert(`${mark} Wins!`);
+          announce.textContent = `${mark} Wins!`;
           _cells.forEach(cell => {
             cell.classList.toggle('game-over');
           });
         } else if (
           gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'tie'
         ) {
-          alert(`It's a tie`);
+          announce.textContent = 'Its a tie.';
         }
       }
     });
@@ -125,6 +126,7 @@ const displayController = (() => {
   };
 
   resetBtn.addEventListener('click', () => {
+    announce.textContent = '';
     gameBoard.resetGame();
     addToDom();
     _cells.forEach(cell => {

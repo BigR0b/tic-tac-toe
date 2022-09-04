@@ -93,7 +93,10 @@ const displayController = (() => {
   const playerPrompt = document.querySelector('.player-container');
   const player1Name = document.querySelector('.player1-name');
   const player2Name = document.querySelector('.player2-name');
-
+  const player1score = document.querySelector('.player1-score');
+  const player2score = document.querySelector('.player2-score');
+  let p1wins = 0;
+  let p2wins = 0;
   const game = document.querySelector('.flex-container');
   const turn = mark => {
     if (mark === 'X') {
@@ -115,6 +118,13 @@ const displayController = (() => {
         const playerMove = allMoves[playerTurn];
         if (gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'winner') {
           announce.textContent = `${mark} Wins!`;
+          if (turn(mark) === 0) {
+            p1wins++;
+            player1score.textContent = p1wins;
+          } else if (turn(mark) === 1) {
+            p2wins++;
+            player2score.textContent = p2wins;
+          }
           _cells.forEach(cell => {
             cell.classList.toggle('game-over');
           });

@@ -84,3 +84,11 @@ h2 {
   justify-content: center;
   align-items: center;
 }
+
+.player1-scoreboard,
+.player2-scoreboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

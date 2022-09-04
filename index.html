@@ -11,13 +11,15 @@
     <div class="flex-container hidden">
       <h1>Tic Tac Toe</h1>
       <div class="scoreboard">
-        <h2 class="player1-name">
-          Player 1 <br /><span class="player1-score"></span>
-        </h2>
+        <div class="player1-scoreboard">
+          <h2 class="player1-name">Player 1</h2>
+          <h3 class="player1-score">0</h3>
+        </div>
         <h2 class="announce-text"></h2>
-        <h2 class="player2-name">
-          Player 2 <br /><span class="player2-score"></span>
-        </h2>
+        <div class="player2-scoreboard">
+          <h2 class="player2-name">Player 2</h2>
+          <h3 class="player2-score">0</h3>
+        </div>
       </div>
       <div class="container">
         <div class="cell" data-cell="0"></div>
@@ -36,11 +38,11 @@
       <div class="player-prompt">
         <div class="players">
           <div class="player-name">
-            <h1>Player 1 name</h1>
+            <h1>Player 1 Name</h1>
             <input type="text" name="" id="" class="player1" />
           </div>
           <div class="player-name">
-            <h1>Player 2 name</h1>
+            <h1>Player 2 Name</h1>
             <input type="text" name="" id="" class="player2" />
           </div>
         </div>

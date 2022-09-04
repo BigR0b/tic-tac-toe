@@ -1,12 +1,12 @@
 'use strict';
 const gameBoard = (() => {
-  let nextPlay = 0;
+  let _nextPlay = 0;
   let mark = () => {
-    if (nextPlay === 0) {
-      nextPlay = 1;
+    if (_nextPlay === 0) {
+      _nextPlay = 1;
       return 'X';
     } else {
-      nextPlay = 0;
+      _nextPlay = 0;
       return 'O';
     }
   };
@@ -19,7 +19,7 @@ const gameBoard = (() => {
     for (let i = 0; i < _game.length; i++) {
       _game[i] = '';
     }
-    nextPlay = 0;
+    _nextPlay = 0;
   };
 
   const winCon = [
@@ -78,27 +78,27 @@ const gameBoard = (() => {
 
   //prettier-ignore
   return {
-    addToGameBoard,  checkMove, winCon, checkWinner,  mark, nextPlay, resetGame
+    addToGameBoard,  checkMove, winCon, checkWinner,  mark, resetGame
   };
 })();
 
 const displayController = (() => {
   const _cells = document.querySelectorAll('.cell');
-  const resetBtn = document.querySelector('.reset');
-  const gameState = gameBoard.addToGameBoard();
-  const announce = document.querySelector('.announce-text');
-  const player1 = document.querySelector('.player1');
-  const player2 = document.querySelector('.player2');
-  const playerBtn = document.querySelector('.playerBtn');
-  const playerPrompt = document.querySelector('.player-container');
-  const player1Name = document.querySelector('.player1-name');
-  const player2Name = document.querySelector('.player2-name');
-  const player1score = document.querySelector('.player1-score');
-  const player2score = document.querySelector('.player2-score');
-  let p1wins = 0;
-  let p2wins = 0;
-  const game = document.querySelector('.flex-container');
-  const turn = mark => {
+  const _resetBtn = document.querySelector('.reset');
+  const _gameState = gameBoard.addToGameBoard();
+  const _announce = document.querySelector('.announce-text');
+  const _player1 = document.querySelector('.player1');
+  const _player2 = document.querySelector('.player2');
+  const _playerBtn = document.querySelector('.playerBtn');
+  const _playerPrompt = document.querySelector('.player-container');
+  const _player1Name = document.querySelector('.player1-name');
+  const _player2Name = document.querySelector('.player2-name');
+  const _player1score = document.querySelector('.player1-score');
+  const _player2score = document.querySelector('.player2-score');
+  let _p1wins = 0;
+  let _p2wins = 0;
+  const _game = document.querySelector('.flex-container');
+  const _turn = mark => {
     if (mark === 'X') {
       return 0;
     } else {
@@ -114,16 +114,16 @@ const displayController = (() => {
         gameBoard.addToGameBoard(move, mark);
         addToDom();
         const allMoves = gameBoard.checkMove();
-        const playerTurn = turn(mark);
+        const playerTurn = _turn(mark);
         const playerMove = allMoves[playerTurn];
         if (gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'winner') {
-          announce.textContent = `${mark} Wins!`;
-          if (turn(mark) === 0) {
-            p1wins++;
-            player1score.textContent = p1wins;
-          } else if (turn(mark) === 1) {
-            p2wins++;
-            player2score.textContent = p2wins;
+          _announce.textContent = `${mark} Wins!`;
+          if (playerTurn === 0) {
+            _p1wins++;
+            _player1score.textContent = _p1wins;
+          } else if (playerTurn === 1) {
+            _p2wins++;
+            _player2score.textContent = _p2wins;
           }
           _cells.forEach(cell => {
             cell.classList.toggle('game-over');
@@ -131,7 +131,7 @@ const displayController = (() => {
         } else if (
           gameBoard.checkWinner(playerMove, gameBoard.winCon) === 'tie'
         ) {
-          announce.textContent = 'Its a tie.';
+          _announce.textContent = 'Its a tie.';
         }
       }
     });
@@ -139,41 +139,35 @@ const displayController = (() => {
 
   const addToDom = () => {
     for (let i = 0; i < _cells.length; i++) {
-      _cells[i].textContent = gameState[i];
+      _cells[i].textContent = _gameState[i];
     }
   };
 
-  resetBtn.addEventListener('click', () => {
-    announce.textContent = '';
+  _resetBtn.addEventListener('click', () => {
+    _announce.textContent = '';
     gameBoard.resetGame();
     addToDom();
     _cells.forEach(cell => {
       cell.classList.remove('game-over');
     });
   });
-  playerBtn.addEventListener('click', () => {
-    const createdPlayer1 = Player(player1.value);
-    const createdPlayer2 = Player(player2.value);
+  _playerBtn.addEventListener('click', () => {
+    const createdPlayer1 = Player(_player1.value);
+    const createdPlayer2 = Player(_player2.value);
 
-    if (player1.value) {
-      player1Name.textContent = createdPlayer1.name;
+    if (_player1.value) {
+      _player1Name.textContent = createdPlayer1.name;
     }
-    if (player2.value) {
-      player2Name.textContent = createdPlayer2.name;
+    if (_player2.value) {
+      _player2Name.textContent = createdPlayer2.name;
     }
 
-    playerPrompt.classList.toggle('hidden');
-    game.classList.remove('hidden');
+    _playerPrompt.classList.toggle('hidden');
+    _game.classList.remove('hidden');
   });
-
-  return { addToDom, gameState };
 })();
 
 const Player = name => {
   const mark = gameBoard.mark();
-  const bot = false;
   return { name, mark };
 };
-
-// const player1 = Player(prompt('Player 1 name'));
-// const player2 = Player(prompt('Player 2 name'));
